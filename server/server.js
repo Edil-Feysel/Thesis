@@ -5,13 +5,29 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin: [""],
-    methods: ["GET", "POST", "DELETE", "PUT"],
+    origin: ["http://localhost:3000"],
+    methods: ["GET"],
   })
 );
 
+// app.use(express.urlencoded({ extended: false }));
+// app.use(express.json());
+
 app.get("/", (req, res) => {
-  res.send("hello world");
+  const sql = "SELECT * FROM user";
+  db.query(sql, (err, data) => {
+    if (err) throw err;
+    res.send(data);
+  });
+});
+
+app.get("/ask", (req, res) => {
+  const sql = "SELECT * FROM member WHERE UserId = 1";
+  db.query(sql, (err, data) => {
+    if (err) throw err;
+    if (!data) return;
+    res.send(data);
+  });
 });
 
 app.listen(3001, () => {
