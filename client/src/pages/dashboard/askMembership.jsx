@@ -1,23 +1,26 @@
 import Axios from "axios";
 import "./index.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const AskAdmin = () => {
   const [family, setFamily] = useState("");
-  const navigate = useNavigate()
-  const {state} = useLocation()
-  const {id} = state || {}
-// console.log(id);
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  const { id } = state || {};
+  const [userId, setUserId] = useState("");
+  useEffect(() => {
+    setUserId(id);
+  }, []);
   const askMembership = () => {
     Axios.post("http://localhost:3001/askMembership", {
       family: family,
-      id: id
+      id: userId,
     });
   };
   return (
     <div>
-      <form action="" onSubmit={askMembership} >
+      <form action="" onSubmit={askMembership}>
         <label htmlFor="family">How many family member do you have?</label>
         <input
           id="family"
@@ -26,11 +29,15 @@ const AskAdmin = () => {
             setFamily(e.target.value);
           }}
         />
-        <button type="submit" >Ask the admin</button>
+        <button type="submit">Ask the admin</button>
       </form>
-      <button onClick={() => {
-        navigate(-1)
-      }}>Back to home</button>
+      <button
+        onClick={() => {
+          navigate(-1);
+        }}
+      >
+        Back to home
+      </button>
     </div>
   );
 };

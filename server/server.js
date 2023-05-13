@@ -32,7 +32,7 @@ app.get("/askbutton", (req, res) => {
 app.post("/askMembership", async (req, res) => {
   const { family, id } = req.body;
   // console.log(id)
-  const sql = `INSERT INTO ask-membership-form (FamilySize, UserId) VALUES ("${family}", "${id}");`
+  const sql = `INSERT INTO askform (FamilySize, UserId) VALUES ("${family}", "${id}");`
   db.query(sql, (err, data) => {
     if (err) throw err
     console.log("successful post")
