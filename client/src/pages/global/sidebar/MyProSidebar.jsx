@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Menu, Sidebar, MenuItem } from "react-pro-sidebar";
 import { useProSidebar } from "react-pro-sidebar";
@@ -113,7 +112,7 @@ const MyProSidebar = () => {
                 ml="15px"
               >
                 <Typography variant="h3" color={colors.grey[100]}>
-                 Welcome
+                  Welcome
                 </Typography>
                 <IconButton
                   onClick={
@@ -171,9 +170,7 @@ const MyProSidebar = () => {
               variant="h6"
               color={colors.grey[300]}
               sx={{ m: "15px 20px 5px 20px" }}
-            >
-            
-            </Typography>
+            ></Typography>
             <Item
               title="Past Event"
               to="/team"
@@ -181,7 +178,7 @@ const MyProSidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-          <Item
+            <Item
               title="Future Event"
               to="/pie"
               icon={<PieChartOutlineOutlinedIcon />}
@@ -195,7 +192,6 @@ const MyProSidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-           
 
             <Item
               title="Update Information"
@@ -213,12 +209,11 @@ const MyProSidebar = () => {
             />
             <Item
               title="Admin"
-              to="/bar"
+              to="/admin"
               icon={<BarChartOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-           
           </Box>
         </Menu>
       </Sidebar>
