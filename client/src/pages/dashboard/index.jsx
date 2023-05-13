@@ -1,34 +1,32 @@
 import Axios from "axios";
 import "./index.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const [data, setData] = useState([]);
   const [ask, setAsk] = useState({});
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    Axios.get("http://localhost:3001/").then((response) => {
-      setData(response.data);
-    });
-    Axios.get("http://localhost:3001/ask").then((response) => {
-      setAsk(response.data);
-      console;
-    });
-  }, []);
+  Axios.get("http://localhost:3001/askbutton").then((response) => {
+    setAsk(response.data);
+  });
 
   return (
     <div>
-      {ask.ID ? (
+      {ask.length > 0 ? (
         <div className="ask-membership">
-          <button className="btn-ask">Ask Membership</button>
+          <button
+            onClick={() => {
+              navigate("/askMembership", {
+                state: { id: 1 },
+              });
+            }}
+            className="btn-ask"
+          >
+            Ask Membership
+          </button>
         </div>
-      ) : (
-        <h1>wellcome</h1>
-      )}
-
-      {/* {data.map((data) => (
-        <h1>{data.Name}</h1>
-      ))} */}
+      ) : null}
     </div>
   );
 };

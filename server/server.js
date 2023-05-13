@@ -6,12 +6,12 @@ const cors = require("cors");
 app.use(
   cors({
     origin: ["http://localhost:3000"],
-    methods: ["GET"],
+    methods: ["GET", "POST"],
   })
 );
 
-// app.use(express.urlencoded({ extended: false }));
-// app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.get("/", (req, res) => {
   const sql = "SELECT * FROM user";
@@ -21,14 +21,23 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/ask", (req, res) => {
-  const sql = "SELECT * FROM member WHERE UserId = 1";
+app.get("/askbutton", (req, res) => {
+  const sql = "SELECT * FROM member WHERE UserId = 2";
   db.query(sql, (err, data) => {
     if (err) throw err;
-    if (!data) return;
-    res.send(data);
+    data ? res.send(data) : null;
   });
 });
+
+app.post("/askMembership", async (req, res) => {
+  const { family, id } = req.body;
+  // console.log(id)
+  const sql = `INSERT INTO ask-membership-form (FamilySize, UserId) VALUES ("${family}", "${id}");`
+  db.query(sql, (err, data) => {
+    if (err) throw err
+    console.log("successful post")
+  })
+})
 
 app.listen(3001, () => {
   console.log("running on port 3001");

@@ -11,6 +11,7 @@ import Calendar from "./pages/calendar";
 import Bar from "./pages/bar";
 import Line from "./pages/line";
 import Pie from "./pages/pie";
+import AskAdmin from "./pages/dashboard/askMembership";
 const App = () => {
   const [theme, colorMode] = useMode();
   return (
@@ -23,6 +24,7 @@ const App = () => {
               <Topbar />
               <Routes>
                 <Route path="/" element={<Dashboard />} />
+                <Route path="/askMembership" element={<AskAdmin />} />
                 <Route path="/team" element={<Team />} />
                 <Route path="/contacts" element={<Contacts />} />
                 <Route path="/form" element={<Form />} />

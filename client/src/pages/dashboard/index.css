@@ -14,4 +14,9 @@
   font-weight: bold;
   font-size: 15px;
   box-shadow: 5px;
+  cursor: pointer;
+}
+
+.btn-ask:hover {
+  -webkit-text-fill-color: rgba(241, 238, 230, 0.651);
 }
