@@ -8,10 +8,11 @@ import Team from "./pages/team";
 import Contacts from "./pages/contacts";
 import Form from "./pages/form";
 import Calendar from "./pages/calendar";
-import Bar from "./pages/bar";
 import Line from "./pages/line";
 import Pie from "./pages/pie";
 import AskAdmin from "./pages/dashboard/askMembership";
+import Admin from "./pages/bar";
+import MembershipForm from "./pages/bar/membershipForm";
 const App = () => {
   const [theme, colorMode] = useMode();
   return (
@@ -29,9 +30,10 @@ const App = () => {
                 <Route path="/contacts" element={<Contacts />} />
                 <Route path="/form" element={<Form />} />
                 <Route path="/line" element={<Line />} />
-                <Route path="/admin" element={<Bar />} />
+                <Route path="/admin" element={<Admin />} />
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/pie" element={<Pie />} />
+                <Route path="/membershipForm" element={<MembershipForm />} />
               </Routes>
             </main>
           </div>

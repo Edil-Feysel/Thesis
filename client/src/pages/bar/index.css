@@ -1,0 +1,39 @@
+.request-membership {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+}
+
+.request-tab {
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 15px;
+  box-shadow: 5px;
+  cursor: pointer;
+  background-color: rgba(8, 8, 8, 0.136);
+  text-align: left;
+  margin-top: 10px;
+  margin-left: 10px;
+  padding: 10px, 5px;
+}
+
+.btn-request {
+  background-color: rgba(28, 28, 28, 0.136);
+  -webkit-text-fill-color: rgba(245, 222, 179, 0.651);
+  border-style: none;
+  height: 40px;
+  width: 180px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 15px;
+  box-shadow: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  padding-left: 5px;
+  margin-left: 10px;
+}
+
+.btn-request:hover {
+  -webkit-text-fill-color: rgba(241, 238, 230, 0.651);
+  background-color: rgba(20, 18, 18, 0.76);
+}

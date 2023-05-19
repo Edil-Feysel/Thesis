@@ -13,12 +13,12 @@ const Dashboard = () => {
 
   return (
     <div>
-      {ask.length > 0 ? (
+      {ask.length > 0 ? null : (
         <div className="ask-membership">
           <button
             onClick={() => {
               navigate("/askMembership", {
-                state: { id: 1 },
+                state: { id: 2 },
               });
             }}
             className="btn-ask"
@@ -26,7 +26,7 @@ const Dashboard = () => {
             Ask Membership
           </button>
         </div>
-      ) : null}
+      )}
     </div>
   );
 };
