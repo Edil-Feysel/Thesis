@@ -38,6 +38,14 @@ app.get("/newRequest", (req, res) => {
   });
 });
 
+app.get("/events", (req, res) => {
+  const sql = "SELECT * FROM event";
+  db.query(sql, (err, data) => {
+    if (err) throw err;
+    res.send(data);
+  });
+});
+
 app.post("/askMembership", async (req, res) => {
   const { family, id } = req.body;
   // console.log(id)
