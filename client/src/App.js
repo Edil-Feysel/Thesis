@@ -12,6 +12,7 @@ import Line from "./pages/line";
 import AskAdmin from "./pages/dashboard/askMembership";
 import Admin from "./pages/Admin";
 import MembershipForm from "./pages/Admin/membershipForm";
+import Notificaton from "./pages/global/Notification";
 const App = () => {
   const [theme, colorMode] = useMode();
   return (
@@ -32,6 +33,7 @@ const App = () => {
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/membershipForm" element={<MembershipForm />} />
+                <Route path="/notification" element={<Notificaton />} />
               </Routes>
             </main>
           </div>
