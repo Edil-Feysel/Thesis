@@ -9,36 +9,44 @@ const AskAdmin = () => {
   const { state } = useLocation();
   const { id } = state || {};
   const [userId, setUserId] = useState("");
+  
   useEffect(() => {
     setUserId(id);
   }, []);
+
   const askMembership = () => {
     Axios.post("http://localhost:3001/askMembership", {
       family: family,
       id: userId,
     });
   };
+
   return (
-    <div>
-      <form action="" onSubmit={askMembership}>
-        <label htmlFor="family">How many family member do you have?</label>
+    <div className="container">
+      <form className="form" onSubmit={askMembership}>
+        <label htmlFor="family" className="label">
+          How many family members do you have?
+        </label>
         <input
           id="family"
+          className="input"
           placeholder="Family size"
           onChange={(e) => {
             setFamily(e.target.value);
           }}
         />
-        <button type="submit">Ask the admin</button>
+        <button type="submit" className="button">Ask the admin</button>
       </form>
       <button
         onClick={() => {
           navigate(-1);
         }}
+        className="button"
       >
         Back to home
       </button>
     </div>
   );
 };
+
 export default AskAdmin;
