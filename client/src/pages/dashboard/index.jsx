@@ -18,7 +18,7 @@ const Dashboard = () => {
           <button
             onClick={() => {
               navigate("/askMembership", {
-                state: { id: 2 },
+                state: { id: 4 },
               });
             }}
             className="btn-ask"

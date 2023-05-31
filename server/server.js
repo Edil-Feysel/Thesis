@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/askbutton", (req, res) => {
-  const sql = "SELECT * FROM members WHERE UserId = 2";
+  const sql = "SELECT * FROM members WHERE UserId = 4";
   db.query(sql, (err, data) => {
     if (err) throw err;
     data ? res.send(data) : null;
@@ -46,6 +46,15 @@ app.get("/events", (req, res) => {
   });
 });
 
+app.get("/askNotification", (req, res) => {
+  const sql =
+    "SELECT * FROM members WHERE UserId = 1  AND month(Date) = month(curdate()) AND year(Date) = year(curdate());";
+  db.query(sql, (err, data) => {
+    if (err) throw err;
+    data ? res.send(data) : null;
+  });
+});
+
 app.post("/askMembership", async (req, res) => {
   const { family, id } = req.body;
   // console.log(id)
@@ -57,19 +66,19 @@ app.post("/askMembership", async (req, res) => {
 });
 app.post("/addNewMember", (req, res) => {
   const { id, FamilySize, userId, group, access, pay } = req.body;
-  console.log(req.body);
-  const sql = `INSERT INTO members (UserId, Group, FamilySize, AccessLevel, MembershipPay) VALUES ("${userId}", "${group}", "${FamilySize}", "${access}", "${pay}");`;
+  console.log(userId);
+  const sql = `INSERT INTO members (UserId, Team, FamilySize, AccessLevel, MembershipPay) VALUES ("${userId}", "${group}", "${FamilySize}", "${access}", "${pay}");`;
 
   db.query(sql, (err, data) => {
     if (err) {
       throw err;
     } else {
       console.log("successful insertion");
-      // const sql = `DELETE FROM askform WHERE ID = ${id}`;
-      // db.query(sql, (err, data) => {
-      //   if (err) throw err;
-      //   console.log("successful deletion");
-      // });
+      const sql = `DELETE FROM askform WHERE ID = ${id}`;
+      db.query(sql, (err, data) => {
+        if (err) throw err;
+        console.log("successful deletion");
+      });
     }
   });
 });
