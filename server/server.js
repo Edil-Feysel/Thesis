@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const db = require("./database");
 const cors = require("cors");
+const bcrypt = require("bcrypt");
 
 app.use(
   cors({
@@ -13,16 +14,46 @@ app.use(
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  const sql = "SELECT * FROM user";
+app.post("/login", (req, res) => {
+  const { user, password } = req.body;
+  const sql = `SELECT * FROM user WHERE UserName = '${user}'`;
   db.query(sql, (err, data) => {
     if (err) throw err;
-    res.send(data);
+    if (data.length == 0) {
+      res.send({ userERR: "user does not exist" });
+    } else {
+      bcrypt.compare(password, data[0].Password, (error, result) => {
+        if (error) throw error;
+        if (result) {
+          res.send(data);
+        } else {
+          console.log("Wrong password and user name combinatio");
+          res.send({ passERR: "Wrong password and user name combination" });
+        }
+      });
+      // res.send(data);
+    }
+  });
+});
+
+app.post("/signUp", (req, res) => {
+  const { Name, UserName, password, PhoneNo } = req.body;
+  bcrypt.genSalt(11, (err, salt) => {
+    if (err) throw err;
+    bcrypt.hash(password, salt, (err, hash) => {
+      // console.log(hash);
+      const sql = `INSERT INTO eder.user (Name, UserName, Password, Phone_No, Access_Level) VALUE ("${Name}", "${UserName}", "${hash}", "${PhoneNo}", "User") `;
+      db.query(sql, (err, data) => {
+        if (err) throw err;
+        console.log("successful");
+        res.send("successful");
+      });
+    });
   });
 });
 
 app.get("/askbutton", (req, res) => {
-  const sql = "SELECT * FROM members WHERE UserId = 4";
+  const sql = "SELECT * FROM members WHERE UserId = 3";
   db.query(sql, (err, data) => {
     if (err) throw err;
     data ? res.send(data) : null;
