@@ -1,7 +1,7 @@
 import Axios from "axios";
 import "./index.css";
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Topbar from "../global/Topbar";
 import { MyProSidebarProvider } from "../global/sidebar/sidebarContext";
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -12,19 +12,13 @@ const AskAdmin = () => {
   const [theme, colorMode] = useMode();
 
   const navigate = useNavigate();
-  const { state } = useLocation();
-  const { id } = state || {};
-  const [userId, setUserId] = useState("");
-
-  useEffect(() => {
-    setUserId(id);
-  }, []);
 
   const askMembership = () => {
     Axios.post("http://localhost:3001/askMembership", {
       family: family,
-      id: userId,
+      id: sessionStorage.getItem("ID"),
     });
+    navigate("/dashboard");
   };
 
   return (
@@ -54,7 +48,7 @@ const AskAdmin = () => {
                 </form>
                 <button
                   onClick={() => {
-                    navigate(-1);
+                    navigate("/dashboard");
                   }}
                   className="button"
                 >

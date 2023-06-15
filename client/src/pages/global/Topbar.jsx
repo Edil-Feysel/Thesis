@@ -1,6 +1,6 @@
 import React from "react";
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { ColorModeContext, tokens } from "../../theme";
 import { useTheme, Box, IconButton, InputBase } from "@mui/material";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
@@ -11,6 +11,8 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import { useProSidebar } from "react-pro-sidebar";
+import Logout from "./Logout/Logout";
+import "./Topbar.css";
 const Topbar = () => {
   const navigate = useNavigate();
   const theme = useTheme();
@@ -50,17 +52,27 @@ const Topbar = () => {
           )}
         </IconButton>
         <IconButton>
+          2
           <NotificationsOutlinedIcon
             onClick={() => {
               navigate("/notification");
             }}
           />
         </IconButton>
+        <div className="profile">
+          <NavLink to="/Profile">
+            {" "}
+            <img src="../../assets/avatar.jpg" alt="" />
+          </NavLink>
+        </div>
         <IconButton>
           <SettingsOutlinedIcon />
         </IconButton>
         <IconButton>
           <PersonOutlinedIcon />
+        </IconButton>
+        <IconButton>
+          <Logout />
         </IconButton>
         {broken && rtl && (
           <IconButton

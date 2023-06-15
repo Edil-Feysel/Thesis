@@ -10,8 +10,9 @@ const Notification = () => {
   const [theme, colorMode] = useMode();
   const [res, setRes] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
+  const ID = sessionStorage.getItem("ID");
 
-  Axios.get("http://localhost:3001/askNotification").then((res) => {
+  Axios.get(`http://localhost:3001/askNotification?ID=${ID}`).then((res) => {
     setRes(res.data);
   });
   return (
@@ -34,7 +35,7 @@ const Notification = () => {
                         darkMode ? "dark-mode" : "light-mode"
                       }`}
                     >
-                      no
+                      There is no notification
                     </h1>
                   ) : (
                     <h1

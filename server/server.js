@@ -2,12 +2,43 @@ const express = require("express");
 const app = express();
 const db = require("./database");
 const cors = require("cors");
+const session = require("express-session");
+const MySQLStore = require("express-mysql-session")(session);
 const bcrypt = require("bcrypt");
 
 app.use(
   cors({
     origin: ["http://localhost:3000"],
     methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
+
+const sessionStore = new MySQLStore(
+  {
+    createDatabaseTable: true,
+    schema: {
+      tableName: "user_sessions",
+      columnNames: {
+        session_id: "session_id",
+        expires: "expires",
+        data: "data",
+      },
+    },
+  },
+  db
+);
+
+app.use(
+  session({
+    key: "eder",
+    secret: "mySecret",
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore,
+    cookie: {
+      maxAge: 86000000,
+    },
   })
 );
 
@@ -16,6 +47,7 @@ app.use(express.json());
 
 app.post("/login", (req, res) => {
   const { user, password } = req.body;
+
   const sql = `SELECT * FROM user WHERE UserName = '${user}'`;
   db.query(sql, (err, data) => {
     if (err) throw err;
@@ -25,16 +57,17 @@ app.post("/login", (req, res) => {
       bcrypt.compare(password, data[0].Password, (error, result) => {
         if (error) throw error;
         if (result) {
-          res.send(data);
+          req.session.user = data;
+          res.send(req.session.user);
         } else {
-          console.log("Wrong password and user name combinatio");
           res.send({ passERR: "Wrong password and user name combination" });
         }
       });
-      // res.send(data);
     }
   });
 });
+
+// res.redirect('/login');
 
 app.post("/signUp", (req, res) => {
   const { Name, UserName, password, PhoneNo } = req.body;
@@ -42,7 +75,7 @@ app.post("/signUp", (req, res) => {
     if (err) throw err;
     bcrypt.hash(password, salt, (err, hash) => {
       // console.log(hash);
-      const sql = `INSERT INTO eder.user (Name, UserName, Password, Phone_No, Access_Level) VALUE ("${Name}", "${UserName}", "${hash}", "${PhoneNo}", "User") `;
+      const sql = `INSERT INTO user (Name, UserName, Password, Phone_No, Access_Level) VALUE ("${Name}", "${UserName}", "${hash}", "${PhoneNo}", "User") `;
       db.query(sql, (err, data) => {
         if (err) throw err;
         console.log("successful");
@@ -52,16 +85,34 @@ app.post("/signUp", (req, res) => {
   });
 });
 
-app.get("/askbutton", (req, res) => {
-  const sql = "SELECT * FROM members WHERE UserId = 3";
+app.get("/getUserInfo", async (req, res) => {
+  const { ID } = req.query;
+  const sql = `SELECT * FROM user WHERE ID = ${ID}`;
+  db.query(sql, (err, data) => {
+    if (err) throw err;
+    res.send(data);
+  });
+});
+
+// app.get("/askbutton", (req, res) => {
+//   const sql = "SELECT * FROM members WHERE UserId = 3";
+//   db.query(sql, (err, data) => {
+//     if (err) throw err;
+//     data ? res.send(data) : null;
+//   });
+// });
+
+app.get("/newRequest", (req, res) => {
+  const sql = "SELECT * FROM askform";
   db.query(sql, (err, data) => {
     if (err) throw err;
     data ? res.send(data) : null;
   });
 });
 
-app.get("/newRequest", (req, res) => {
-  const sql = "SELECT * FROM askform";
+app.get("/askedBefore", (req, res) => {
+  const { ID } = req.query;
+  const sql = `SELECT * FROM askform WHERE UserId = ${ID}`;
   db.query(sql, (err, data) => {
     if (err) throw err;
     data ? res.send(data) : null;
@@ -78,17 +129,27 @@ app.get("/events", (req, res) => {
 });
 
 app.get("/askNotification", (req, res) => {
-  const sql =
-    "SELECT * FROM members WHERE UserId = 1  AND month(Date) = month(curdate()) AND year(Date) = year(curdate());";
+  const { ID } = req.query;
+  // console.log(ID);
+  const sql = `SELECT * FROM members WHERE UserId = ${ID}`;
   db.query(sql, (err, data) => {
-    if (err) throw err;
-    data ? res.send(data) : null;
+    if (err) {
+      throw err;
+    } else {
+      const MId = data[0].ID;
+      // console.log(MId);
+      const sql = `SELECT * FROM monthlypayment WHERE MembersId = ${MId} AND month(PaymentDate) = month(curdate()) AND year(PaymentDate) = year(curdate())`;
+      db.query(sql, (err, dpay) => {
+        if (err) throw err;
+        dpay ? res.send(dpay) : null;
+      });
+    }
   });
 });
 
 app.post("/askMembership", async (req, res) => {
   const { family, id } = req.body;
-  // console.log(id)
+  console.log(id, family);
   const sql = `INSERT INTO askform (FamilySize, UserId) VALUES ("${family}", "${id}");`;
   db.query(sql, (err, data) => {
     if (err) throw err;
@@ -97,18 +158,25 @@ app.post("/askMembership", async (req, res) => {
 });
 app.post("/addNewMember", (req, res) => {
   const { id, FamilySize, userId, group, access, pay } = req.body;
-  console.log(userId);
-  const sql = `INSERT INTO members (UserId, Team, FamilySize, AccessLevel, MembershipPay) VALUES ("${userId}", "${group}", "${FamilySize}", "${access}", "${pay}");`;
-
+  // console.log(id);
+  const sql = `UPDATE user SET Access_Level = "${access}" WHERE ID = ${userId};`;
   db.query(sql, (err, data) => {
     if (err) {
       throw err;
     } else {
-      console.log("successful insertion");
-      const sql = `DELETE FROM askform WHERE ID = ${id}`;
+      console.log("successful update");
+      const sql = `INSERT INTO members (UserId, Team, FamilySize, MembershipPay) VALUES ("${userId}", "${group}", "${FamilySize}", "${pay}");`;
       db.query(sql, (err, data) => {
-        if (err) throw err;
-        console.log("successful deletion");
+        if (err) {
+          throw err;
+        } else {
+          console.log("successful insertion");
+          const sql = `DELETE FROM askform WHERE ID = ${id}`;
+          db.query(sql, (err, data) => {
+            if (err) throw err;
+            console.log("successful deletion");
+          });
+        }
       });
     }
   });

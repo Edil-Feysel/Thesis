@@ -23,10 +23,8 @@ const MembershipForm = () => {
       group: group,
       access: access,
       pay: pay,
-    });
+    }).then(navigate("/admin"));
   };
-
-  //  console.log(typeof data.FamilySize);
 
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -74,7 +72,7 @@ const MembershipForm = () => {
                 </form>
                 <button
                   onClick={() => {
-                    navigate(-1);
+                    navigate("/admin");
                   }}
                 >
                   Back
