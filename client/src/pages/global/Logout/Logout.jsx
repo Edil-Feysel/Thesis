@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "./Logout.css";
 
 const Logout = () => {
   const navigate = useNavigate();
@@ -7,7 +8,11 @@ const Logout = () => {
     sessionStorage.clear();
     navigate("/");
   };
-  return <button onClick={LogOut}>Logout</button>;
+  return (
+    <button className="logout-btn" onClick={LogOut}>
+      Logout
+    </button>
+  );
 };
 
 export default Logout;
