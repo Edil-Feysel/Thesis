@@ -5,6 +5,8 @@ const cors = require("cors");
 const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
 const bcrypt = require("bcrypt");
+const multer = require("multer");
+const path = require("path");
 
 app.use(
   cors({
@@ -13,6 +15,24 @@ app.use(
     credentials: true,
   })
 );
+
+app.use(express.static("./public"));
+
+const storage = multer.diskStorage({
+  destination: (req, file, callBack) => {
+    callBack(null, "./public/images");
+  },
+  filename: (req, file, callBack) => {
+    callBack(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
+const upload = multer({
+  storage: storage,
+});
 
 const sessionStore = new MySQLStore(
   {
@@ -120,6 +140,16 @@ app.get("/askedBefore", (req, res) => {
   });
 });
 
+app.get("/profile", (req, res) => {
+  const { ID } = req.query;
+  const sql = `SELECT * FROM user WHERE ID = ${ID}`;
+  db.query(sql, (err, data) => {
+    if (err) throw err;
+    data ? res.send(data) : null;
+    // console.log(data[0].Name);
+  });
+});
+
 app.get("/events", (req, res) => {
   const sql = "SELECT * FROM event";
   db.query(sql, (err, data) => {
@@ -156,6 +186,23 @@ app.post("/askMembership", async (req, res) => {
     console.log("successful post");
   });
 });
+
+app.post("/profilePhoto", upload.single("file"), async (req, res) => {
+  const { ID } = req.query;
+  // console.log(ID);
+  if (!req.file) {
+    console.log("no file uploaded");
+  } else {
+    // console.log(req.file.filename);
+    const imgsrc = "http://localhost:3001/images/" + req.file.filename;
+    const sql = `UPDATE user SET Picture = "${imgsrc}" WHERE ID = ${ID}`;
+    db.query(sql, (err, data) => {
+      if (err) throw err;
+      console.log("we did it");
+    });
+  }
+});
+
 app.post("/addNewMember", (req, res) => {
   const { id, FamilySize, userId, group, access, pay } = req.body;
   // console.log(id);

@@ -1,0 +1,12 @@
+.logout-btn {
+  height: 40px;
+  width: 80px;
+  border-radius: 10px;
+  border-style: none;
+  background-color: rgb(172, 166, 166);
+  box-shadow: inset;
+  font-size: 18px;
+  font-weight: bold;
+  color: rgb(6, 6, 28);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
