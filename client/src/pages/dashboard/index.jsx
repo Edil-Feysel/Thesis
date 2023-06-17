@@ -52,7 +52,7 @@ const Dashboard = () => {
                         }}
                         className="btn-ask"
                       >
-                        Ask Membership
+                        Ask
                       </button>
                     </div>
                   )
