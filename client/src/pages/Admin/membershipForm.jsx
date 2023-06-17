@@ -5,7 +5,7 @@ import Topbar from "../global/Topbar";
 import { MyProSidebarProvider } from "../global/sidebar/sidebarContext";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "../../theme";
-
+import "./membershipform.css"; 
 const MembershipForm = () => {
   const [theme, colorMode] = useMode();
   const [group, setGroup] = useState("");
@@ -17,72 +17,76 @@ const MembershipForm = () => {
 
   const addNewMember = () => {
     Axios.post("http://localhost:3001/addNewMember", {
-      id: data.ID,
-      FamilySize: data.FamilySize,
-      userId: data.UserId,
+      id: data?.ID,
+      FamilySize: data?.FamilySize,
+      userId: data?.UserId,
       group: group,
       access: access,
       pay: pay,
-    }).then(navigate("/admin"));
+    }).then(() => navigate("/admin"));
   };
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <MyProSidebarProvider>
-          <div style={{ height: "100%", width: "100%" }}>
-            <main>
+    <center>
+      <ColorModeContext.Provider value={colorMode}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <MyProSidebarProvider>
+            <div className="container">
               <Topbar />
-              <div>
-                <form action="" onSubmit={addNewMember}>
-                  <label htmlFor="group">Choose a Group</label>
-                  <select
-                    id="group"
-                    name="group"
-                    onChange={(e) => {
-                      setGroup(e.target.value);
-                    }}
-                  >
-                    <option value="Group A">Group A</option>
-                    <option value="Group B">Group B</option>
-                    <option value="Group C">Group C</option>
-                    <option value="Group D">Group D</option>
-                  </select>
-                  <label htmlFor="access">Access Level</label>
-                  <select
-                    id="access"
-                    name="access"
-                    onChange={(e) => {
-                      setAccess(e.target.value);
-                    }}
-                  >
-                    <option value="Member">Member</option>
-                    <option value="Admin">Admin</option>
-                  </select>
-                  <label htmlFor="pay">Membership Payment Amount</label>
-                  <input
-                    id="pay"
-                    type="text"
-                    onChange={(e) => {
-                      setPay(e.target.value);
-                    }}
-                  ></input>
-                  <button type="submit">Submit</button>
-                </form>
-                <button
-                  onClick={() => {
-                    navigate("/admin");
-                  }}
-                >
-                  Back
-                </button>
-              </div>
-            </main>
-          </div>
-        </MyProSidebarProvider>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+              <main>
+                <div className="form-container">
+                  <h1>Membership Form</h1>
+                  <form id="myForm" onSubmit={addNewMember}>
+                    <div className="form-group">
+                      <label htmlFor="group">Choose a Group</label>
+                      <select
+                        id="group"
+                        name="group"
+                        value={group}
+                        onChange={(e) => setGroup(e.target.value)}
+                      >
+                        <option value="">Select Group</option>
+                        <option value="Group A">Group A</option>
+                        <option value="Group B">Group B</option>
+                        <option value="Group C">Group C</option>
+                        <option value="Group D">Group D</option>
+                      </select>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="access">Access Level</label>
+                      <select
+                        id="access"
+                        name="access"
+                        value={access}
+                        onChange={(e) => setAccess(e.target.value)}
+                      >
+                        <option value="">Select Access Level</option>
+                        <option value="Member">Member</option>
+                        <option value="Admin">Admin</option>
+                      </select>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="pay">Membership Payment Amount</label>
+                      <input
+                        id="pay"
+                        type="text"
+                        value={pay}
+                        onChange={(e) => setPay(e.target.value)}
+                      />
+                    </div>
+                    <div className="button-group">
+                      <button type="submit">Submit</button>
+                      <button onClick={() => navigate("/admin")}>Back</button>
+                    </div>
+                  </form>
+                </div>
+              </main>
+            </div>
+          </MyProSidebarProvider>
+        </ThemeProvider>
+      </ColorModeContext.Provider>
+    </center>
   );
 };
 
