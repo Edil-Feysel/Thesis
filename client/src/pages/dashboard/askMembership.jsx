@@ -1,11 +1,11 @@
 import Axios from "axios";
-import "./index.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Topbar from "../global/Topbar";
 import { MyProSidebarProvider } from "../global/sidebar/sidebarContext";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "../../theme";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 
 const AskAdmin = () => {
   const [family, setFamily] = useState("");
@@ -49,129 +49,115 @@ const AskAdmin = () => {
             <main>
               <Topbar />
               <div className="container">
-                <form className="form" onSubmit={askMembership}>
-                  <label htmlFor="app" className="label">
-                    Applicant Name
-                  </label>
-                  <input
+                <Box component="form" onSubmit={askMembership} sx={{ mt: 3, width: "100%" }}>
+                  <Typography variant="h5" gutterBottom>
+                    Ask Membership
+                  </Typography>
+                  <TextField
                     id="app"
-                    className="input"
-                    placeholder="Applicant Name"
-                    onChange={(e) => {
-                      setApplicant(e.target.value);
-                    }}
+                    label="Applicant Name"
+                    fullWidth
+                    required
+                    value={applicant}
+                    onChange={(e) => setApplicant(e.target.value)}
+                    sx={{ mb: 2 }}
                   />
-                  <label htmlFor="bapp" className="label">
-                    Birth date of applicant
-                  </label>
-                  <input
+                  <TextField
                     id="bapp"
-                    className="input"
-                    placeholder="Birth date of Applicant"
-                    onChange={(e) => {
-                      setApplicantBod(e.target.value);
-                    }}
+                    label="Birth date of applicant"
+                    fullWidth
+                    required
+                    value={applicantBod}
+                    onChange={(e) => setApplicantBod(e.target.value)}
+                    sx={{ mb: 2 }}
                   />
-                  <label htmlFor="family" className="label">
-                    How many family members do you have?
-                  </label>
-                  <input
+                  <TextField
                     id="family"
-                    className="input"
-                    placeholder="Family size"
-                    onChange={(e) => {
-                      setFamily(e.target.value);
-                    }}
+                    label="How many family members do you have?"
+                    fullWidth
+                    required
+                    value={family}
+                    onChange={(e) => setFamily(e.target.value)}
+                    sx={{ mb: 2 }}
                   />
-                  <label htmlFor="kebele" className="label">
-                    Kebele
-                  </label>
-                  <input
+                  <TextField
                     id="kebele"
-                    className="input"
-                    placeholder="Kebele"
-                    onChange={(e) => {
-                      setKebele(e.target.value);
-                    }}
+                    label="Kebele"
+                    fullWidth
+                    required
+                    value={Kebele}
+                    onChange={(e) => setKebele(e.target.value)}
+                    sx={{ mb: 2 }}
                   />
-                  <label htmlFor="occ" className="label">
-                    Occation
-                  </label>
-                  <input
+                  <TextField
                     id="occ"
-                    className="input"
-                    placeholder="Occation"
-                    onChange={(e) => {
-                      setOccation(e.target.value);
-                    }}
+                    label="Occation"
+                    fullWidth
+                    required
+                    value={occation}
+                    onChange={(e) => setOccation(e.target.value)}
+                    sx={{ mb: 2 }}
                   />
-                  <label htmlFor="sname" className="label">
-                    Spouse Name
-                  </label>
-                  <input
+                  <TextField
                     id="sname"
-                    className="input"
-                    placeholder="Spouse Name"
-                    onChange={(e) => {
-                      setSpouseName(e.target.value);
-                    }}
+                    label="Spouse Name"
+                    fullWidth
+                    value={spouseName}
+                    onChange={(e) => setSpouseName(e.target.value)}
+                    sx={{ mb: 2 }}
                   />
-                  <label htmlFor="sbod" className="label">
-                    Birth Date of your spouse
-                  </label>
-                  <input
+                  <TextField
                     id="sbod"
-                    className="input"
-                    placeholder="Spouse birth date"
-                    onChange={(e) => {
-                      setSpouseBod(e.target.value);
-                    }}
+                    label="Birth Date of your spouse"
+                    fullWidth
+                    value={spouseBod}
+                    onChange={(e) => setSpouseBod(e.target.value)}
+                    sx={{ mb: 2 }}
                   />
-                  <label htmlFor="child" className="label">
-                    Number of children under 18
-                  </label>
-                  <input
+                  <TextField
                     id="child"
-                    className="input"
-                    placeholder="Child only under 18"
-                    onChange={(e) => {
-                      setChildren(e.target.value);
-                    }}
+                    label="Number of children under 18"
+                    fullWidth
+                    required
+                    value={children}
+                    onChange={(e) => setChildren(e.target.value)}
+                    sx={{ mb: 2 }}
                   />
-                  <label htmlFor="econtact" className="label">
-                    Emergency contact person
-                  </label>
-                  <input
+                  <TextField
                     id="econtact"
-                    className="input"
-                    placeholder="Emergency contact name"
-                    onChange={(e) => {
-                      setEcontactName(e.target.value);
-                    }}
+                    label="Emergency contact person"
+                    fullWidth
+                    required
+                    value={eContactName}
+                    onChange={(e) => setEcontactName(e.target.value)}
+                    sx={{ mb: 2 }}
                   />
-                  <label htmlFor="ephone" className="label">
-                    Emergency contact person phone number
-                  </label>
-                  <input
+                  <TextField
                     id="ephone"
-                    className="input"
-                    placeholder="Emergency contact"
-                    onChange={(e) => {
-                      setEphone(e.target.value);
-                    }}
+                    label="Emergency contact person phone number"
+                    fullWidth
+                    required
+                    value={ePhone}
+                    onChange={(e) => setEphone(e.target.value)}
+                    sx={{ mb: 2 }}
                   />
-                  <button type="submit" className="button">
-                    Submit
-                  </button>
-                </form>
-                <button
-                  onClick={() => {
-                    navigate("/dashboard");
-                  }}
-                  className="button"
-                >
-                  Back to home
-                </button>
+                  <Grid container justifyContent="space-between">
+                    <Grid item>
+                      <Button
+                        variant="contained"
+                        onClick={() => navigate("/dashboard")}
+                        sx={{ mr: 2 }}
+                      >
+                        Back to home
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <Button type="submit" variant="contained" color="primary">
+                        Submit
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Box>
               </div>
             </main>
           </div>
