@@ -7,6 +7,7 @@ const MySQLStore = require("express-mysql-session")(session);
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 const path = require("path");
+const axios = require("axios").default;
 
 app.use(
   cors({
@@ -65,7 +66,7 @@ app.use(
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
   const { user, password } = req.body;
 
   const sql = `SELECT * FROM user WHERE UserName = '${user}'`;
@@ -89,7 +90,7 @@ app.post("/login", (req, res) => {
 
 // res.redirect('/login');
 
-app.post("/signUp", (req, res) => {
+app.post("/signUp", async (req, res) => {
   const { Name, UserName, password, PhoneNo } = req.body;
   bcrypt.genSalt(11, (err, salt) => {
     if (err) throw err;
@@ -122,7 +123,7 @@ app.get("/getUserInfo", async (req, res) => {
 //   });
 // });
 
-app.get("/newRequest", (req, res) => {
+app.get("/newRequest", async (req, res) => {
   const sql = "SELECT * FROM askform";
   db.query(sql, (err, data) => {
     if (err) throw err;
@@ -130,7 +131,7 @@ app.get("/newRequest", (req, res) => {
   });
 });
 
-app.get("/askedBefore", (req, res) => {
+app.get("/askedBefore", async (req, res) => {
   const { ID } = req.query;
   const sql = `SELECT * FROM askform WHERE UserId = ${ID}`;
   db.query(sql, (err, data) => {
@@ -140,7 +141,7 @@ app.get("/askedBefore", (req, res) => {
   });
 });
 
-app.get("/profile", (req, res) => {
+app.get("/profile", async (req, res) => {
   const { ID } = req.query;
   const sql = `SELECT * FROM user WHERE ID = ${ID}`;
   db.query(sql, (err, data) => {
@@ -150,7 +151,7 @@ app.get("/profile", (req, res) => {
   });
 });
 
-app.get("/events", (req, res) => {
+app.get("/events", async (req, res) => {
   const sql = "SELECT * FROM event";
   db.query(sql, (err, data) => {
     if (err) throw err;
@@ -158,7 +159,7 @@ app.get("/events", (req, res) => {
   });
 });
 
-app.get("/askNotification", (req, res) => {
+app.get("/askNotification", async (req, res) => {
   const { ID } = req.query;
   // console.log(ID);
   const sql = `SELECT * FROM members WHERE UserId = ${ID}`;
@@ -178,9 +179,21 @@ app.get("/askNotification", (req, res) => {
 });
 
 app.post("/askMembership", async (req, res) => {
-  const { family, id } = req.body;
+  const {
+    family,
+    id,
+    Kebele,
+    occation,
+    applicant,
+    spouseName,
+    spouseBod,
+    applicantBod,
+    children,
+    eContactName,
+    ePhone,
+  } = req.body;
   console.log(id, family);
-  const sql = `INSERT INTO askform (FamilySize, UserId) VALUES ("${family}", "${id}");`;
+  const sql = `INSERT INTO askform (FamilySize, UserId) VALUES ("${family}", "${id}",  "${Kebele}","${occation}","${applicant}","${spouseName}","${spouseBod}","${applicantBod}","${children}","${eContactName}","${ePhone}");`;
   db.query(sql, (err, data) => {
     if (err) throw err;
     console.log("successful post");
@@ -202,7 +215,6 @@ app.post("/profilePhoto", upload.single("file"), async (req, res) => {
     });
   }
 });
-const axios = require("axios").default;
 
 app.post("/payment", async (req, res) => {
   const PORT = process.env.PORT || 4400;
@@ -238,7 +250,7 @@ app.post("/payment", async (req, res) => {
     .catch((err) => console.log(err));
 });
 
-app.post("/addNewMember", (req, res) => {
+app.post("/addNewMember", async (req, res) => {
   const { id, FamilySize, userId, group, access, pay } = req.body;
   // console.log(id);
   const sql = `UPDATE user SET Access_Level = "${access}" WHERE ID = ${userId};`;
