@@ -9,6 +9,11 @@ import { ColorModeContext, useMode } from "../../theme";
 
 const AskAdmin = () => {
   const [family, setFamily] = useState("");
+  // const [BOD, setBOD] = useState("")
+  // const [, setBOD] = useState("")
+  // const [BOD, setBOD] = useState("")
+  // const [BOD, setBOD] = useState("")
+  // const [BOD, setBOD] = useState("")
   const [theme, colorMode] = useMode();
 
   const navigate = useNavigate();
