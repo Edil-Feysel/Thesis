@@ -5,7 +5,7 @@ import RequireAuth from "./pages/global/RequireAuth/RequireAuth";
 import Dashboard from "./pages/dashboard/index";
 import Event from "./pages/Event/index";
 // import Contacts from "./pages/contacts";
-import Form from "./pages/form";
+import User from "./pages/User";
 import Calendar from "./pages/calendar";
 // import Line from "./pages/line";
 import AskAdmin from "./pages/dashboard/askMembership";
@@ -29,8 +29,8 @@ const App = () => {
         </Route>
         <Route element={<RequireAuth Autherization={["Member", "Admin"]} />}>
           <Route path="/event" element={<Event />} />
-          <Route path="/form" element={<Form />} />
-          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/user" element={<User />} />
+          <Route path="/schedule" element={<Calendar />} />
         </Route>
         <Route element={<RequireAuth Autherization={["Admin"]} />}>
           <Route path="/admin" element={<Admin />} />

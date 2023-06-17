@@ -202,6 +202,41 @@ app.post("/profilePhoto", upload.single("file"), async (req, res) => {
     });
   }
 });
+const axios = require("axios").default;
+
+app.post("/payment", async (req, res) => {
+  const PORT = process.env.PORT || 4400;
+
+  const CHAPA_URL = "https://api.chapa.co/v1/transaction/initialize";
+  const CHAPA_AUTH = "CHASECK_TEST-XhD2k7sWyUsiPWQGtusAxLrq6k26nDvh";
+  const config = {
+    headers: {
+      Authorization: ` Bearer ${CHAPA_AUTH}`,
+    },
+  };
+  const CALLBACK_URL = "http://localhost:4400/api/verify-payment/";
+  const RETURN_URL = `http://localhost:3000/dashboard`;
+
+  const TEXT_REF = "tx-myecommerce12345-" + Date.now();
+
+  const data = {
+    amount: req.body.amount,
+    currency: "ETB",
+    first_name: req.body.name,
+    phone_number: req.body.phone_number,
+    tx_ref: TEXT_REF,
+    callback_url: CALLBACK_URL + TEXT_REF,
+    return_url: RETURN_URL,
+  };
+  console.log(data);
+
+  await axios
+    .post(CHAPA_URL, data, config)
+    .then((response) => {
+      res.send(response.data.data.checkout_url);
+    })
+    .catch((err) => console.log(err));
+});
 
 app.post("/addNewMember", (req, res) => {
   const { id, FamilySize, userId, group, access, pay } = req.body;

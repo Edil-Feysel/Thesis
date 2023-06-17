@@ -178,15 +178,15 @@ const MyProSidebar = () => {
             />
 
             <Item
-              title="Update Information"
-              to="/form"
+              title="User"
+              to="/user"
               icon={<PersonOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Calendar"
-              to="/calendar"
+              title="Schedule"
+              to="/schedule"
               icon={<CalendarTodayOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}

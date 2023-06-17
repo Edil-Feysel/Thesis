@@ -104,9 +104,181 @@
   fill: #142749;
 }
 
+.Form-Control {
+  margin: 1rem 0.5rem 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.Form-Control:nth-child(2),
+.Form-Control:nth-child(3),
+.Form-Control:nth-child(4) {
+  padding-top: 0.5rem;
+}
+
+.Form-Control:last-child fieldset {
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.Form-Control:last-child button {
+  width: 20%;
+}
+
+.input-control {
+  margin-right: 1.5rem;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.input-control input,
+.input-control select,
+.input-control fieldset {
+  margin-left: 0;
+  background-image: none;
+  background-color: #fff;
+  padding: 9px 15px;
+  border: 1px solid #e7e7e7;
+  border-radius: 8px;
+  outline: none;
+  font-size: 1rem;
+}
+
+.input-control input:focus,
+.input-control select:focus {
+  box-shadow: inset 0 0 5px #c8e0ef;
+}
+
+.input-control {
+  margin-top: 1rem;
+}
+
+.input-control fieldset {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
+
+.setting-countainer {
+  height: 65vh;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+}
+
+.setting-header {
+  position: relative;
+  background-color: #3071e7;
+  color: #fff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.header-list {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+
+.header-text {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  height: 2.2rem;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.setting-btn {
+  padding: 8px 18px;
+  border: none;
+  background: none;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.setting-btn:focus {
+  background-color: #fff;
+  color: #3071e7;
+}
+
+.setting-countent {
+  width: 100%;
+}
+
+.Defualt .General {
+  display: flex;
+  flex-direction: column;
+}
+
+.General {
+  width: 100%;
+  display: none;
+}
+
+.General .Form-Control {
+  display: flex;
+}
+
+.Form-Control {
+  font-size: 25px;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.Security {
+  width: 100%;
+  display: none;
+}
+
+.Show,
+.display {
+  display: flex;
+  flex-direction: column;
+}
+
+.General .submit-control,
+.Security .submit-control {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
 /* @media (ma) */
 
 /* .profile-countainer {
+    display: grid;
+    grid-template-columns: 1fr;
+  } */
+
+/* .setting-countainer {
+    height: 100vh;
+  } */
+
+/* .General .Form-Control {
+    display: grid;
+    grid-template-columns: 1fr;
+  } */
+
+/* .input-control fieldset {
+    display: flex;
+    justify-content: center;
+  } */
+
+/* .input-control {
+    width: 90%;
+  } */
+/* 
+  .Form-Control {
+    font-size: 25px;
     display: grid;
     grid-template-columns: 1fr;
   } */

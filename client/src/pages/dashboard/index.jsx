@@ -26,6 +26,21 @@ const Dashboard = () => {
     setAsked(response.data);
   });
 
+  const handlebooking = () => {
+    const data = {
+      amount: 3000,
+      name: access[0]?.Name,
+      phone_number: access[0]?.Phone_No,
+    };
+    Axios.post("http://localhost:3001/payment/", data)
+      .then((response) => {
+        window.open(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
@@ -42,6 +57,7 @@ const Dashboard = () => {
                         Dear{" "}
                         {JSON.parse(sessionStorage.getItem("autenthicate"))},{" "}
                         your membership request is on process
+                        <button onClick={handlebooking}>Pay</button>
                       </h3>
                     </div>
                   ) : (
