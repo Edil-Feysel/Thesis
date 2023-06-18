@@ -13,6 +13,7 @@ import Admin from "./pages/Admin";
 import MembershipForm from "./pages/Admin/membershipForm";
 import Notificaton from "./pages/global/Notification";
 import Profile from "./pages/global/Profile/Profile";
+import Payment from "./pages/dashboard/paymentPage";
 const App = () => {
   return (
     <>
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/askMembership" element={<AskAdmin />} />
           <Route path="/notification" element={<Notificaton />} />
+          <Route path="/payment" element={<Payment />} />
         </Route>
         <Route element={<RequireAuth Autherization={["Member", "Admin"]} />}>
           <Route path="/event" element={<Event />} />

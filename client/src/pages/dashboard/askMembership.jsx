@@ -28,7 +28,7 @@ const AskAdmin = () => {
       family: family,
       id: sessionStorage.getItem("ID"),
       Kebele: Kebele,
-      occation: occation,
+      occupation: occation,
       applicant: applicant,
       spouseName: spouseName,
       spouseBod: spouseBod,
@@ -37,6 +37,16 @@ const AskAdmin = () => {
       eContactName: eContactName,
       ePhone: ePhone,
     });
+    setFamily("");
+    setKebele("");
+    setOccation("");
+    setApplicant("");
+    setSpouseName("");
+    setSpouseBod("");
+    setApplicantBod("");
+    setChildren("");
+    setEcontactName("");
+    setEphone("");
     navigate("/dashboard");
   };
 
@@ -49,7 +59,11 @@ const AskAdmin = () => {
             <main>
               <Topbar />
               <div className="container">
-                <Box component="form" onSubmit={askMembership} sx={{ mt: 3, width: "100%" }}>
+                <Box
+                  component="form"
+                  onSubmit={askMembership}
+                  sx={{ mt: 3, width: "100%" }}
+                >
                   <Typography variant="h5" gutterBottom>
                     Ask Membership
                   </Typography>
@@ -91,7 +105,7 @@ const AskAdmin = () => {
                   />
                   <TextField
                     id="occ"
-                    label="Occation"
+                    label="Occupation"
                     fullWidth
                     required
                     value={occation}
