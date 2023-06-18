@@ -5,7 +5,7 @@ import Topbar from "../global/Topbar";
 import { MyProSidebarProvider } from "../global/sidebar/sidebarContext";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "../../theme";
-import "./membershipform.css"; 
+import "./membershipform.css";
 const MembershipForm = () => {
   const [theme, colorMode] = useMode();
   const [group, setGroup] = useState("");
@@ -23,7 +23,20 @@ const MembershipForm = () => {
       group: group,
       access: access,
       pay: pay,
-    }).then(() => navigate("/admin"));
+      Kebele: data?.Kebele,
+      Occupation: data?.Occupation,
+      Applicant: data?.Applicant,
+      Spouse_Name: data?.Spouse_Name,
+      Spouse_Bod: data?.Spouse_Bod,
+      Applicant_Bod: data?.Applicant_Bod,
+      Children: data?.Children,
+      eContactName: data?.eContactName,
+      ePhone: data?.ePhone,
+    });
+    setGroup("");
+    setAccess("");
+    setPay("");
+    navigate("/Admin");
   };
 
   return (
@@ -36,7 +49,7 @@ const MembershipForm = () => {
               <Topbar />
               <main>
                 <div className="form-container">
-                  <h1>Membership Form</h1>
+                  <h1>Membership Form for {data?.Applicant}</h1>
                   <form id="myForm" onSubmit={addNewMember}>
                     <div className="form-group">
                       <label htmlFor="group">Choose a Group</label>

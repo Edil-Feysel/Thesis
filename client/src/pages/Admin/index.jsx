@@ -40,7 +40,8 @@ const Admin = () => {
                         });
                       }}
                     >
-                      New membership request
+                      New membership request from{" "}
+                      <span className="name">{request[index].Applicant}</span>
                     </button>
                   ))}
                 </div>

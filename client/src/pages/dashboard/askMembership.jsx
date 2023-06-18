@@ -78,7 +78,7 @@ const AskAdmin = () => {
                   />
                   <TextField
                     id="bapp"
-                    label="Birth date of applicant"
+                    label="Birth date of applicant in the form of 0000-00-00"
                     fullWidth
                     required
                     value={applicantBod}
@@ -122,7 +122,7 @@ const AskAdmin = () => {
                   />
                   <TextField
                     id="sbod"
-                    label="Birth Date of your spouse"
+                    label="Birth Date of your spouse in the form of 0000-00-00"
                     fullWidth
                     value={spouseBod}
                     onChange={(e) => setSpouseBod(e.target.value)}

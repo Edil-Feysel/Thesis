@@ -192,19 +192,7 @@ app.post("/askMembership", async (req, res) => {
     eContactName,
     ePhone,
   } = req.body;
-  // console.log(
-  //   id,
-  //   family,
-  //   Kebele,
-  //   occation,
-  //   applicant,
-  //   spouseName,
-  //   spouseBod,
-  //   applicantBod,
-  //   children,
-  //   eContactName,
-  //   ePhone
-  // );
+
   const sql = `INSERT INTO askform (FamilySize, UserId, Kebele, Occupation, Applicant, Spouse_Name, Spouse_Bod, Applicant_Bod, Children, eContactName, ePhone) VALUES ("${family}", "${id}",  "${Kebele}","${occupation}","${applicant}","${spouseName}","${spouseBod}","${applicantBod}","${children}","${eContactName}","${ePhone}");`;
   db.query(sql, (err, data) => {
     if (err) throw err;
@@ -263,15 +251,31 @@ app.post("/payment", async (req, res) => {
 });
 
 app.post("/addNewMember", async (req, res) => {
-  const { id, FamilySize, userId, group, access, pay } = req.body;
-  // console.log(id);
+  const {
+    id,
+    FamilySize,
+    userId,
+    group,
+    access,
+    pay,
+    Kebele,
+    Occupation,
+    Applicant,
+    Spouse_Name,
+    Spouse_Bod,
+    Applicant_Bod,
+    Children,
+    eContactName,
+    ePhone,
+  } = req.body;
+
   const sql = `UPDATE user SET Access_Level = "${access}" WHERE ID = ${userId};`;
   db.query(sql, (err, data) => {
     if (err) {
       throw err;
     } else {
       console.log("successful update");
-      const sql = `INSERT INTO members (UserId, Team, FamilySize, MembershipPay) VALUES ("${userId}", "${group}", "${FamilySize}", "${pay}");`;
+      const sql = `INSERT INTO members (UserId, Team, FamilySize, MembershipPay, Kebele, Occupation, Applicant, Spouse_Name, Spouse_Bod, Applicant_Bod, Children, eContactName, ePhone) VALUES ("${userId}", "${group}", "${FamilySize}", "${pay}", "${Kebele}", "${Occupation}", "${Applicant}", "${Spouse_Name}", "${Spouse_Bod}", "${Applicant_Bod}", "${Children}", "${eContactName}", "${ePhone}");`;
       db.query(sql, (err, data) => {
         if (err) {
           throw err;
