@@ -183,7 +183,7 @@ app.post("/askMembership", async (req, res) => {
     family,
     id,
     Kebele,
-    occation,
+    occupation,
     applicant,
     spouseName,
     spouseBod,
@@ -192,8 +192,20 @@ app.post("/askMembership", async (req, res) => {
     eContactName,
     ePhone,
   } = req.body;
-  console.log(id, family);
-  const sql = `INSERT INTO askform (FamilySize, UserId) VALUES ("${family}", "${id}",  "${Kebele}","${occation}","${applicant}","${spouseName}","${spouseBod}","${applicantBod}","${children}","${eContactName}","${ePhone}");`;
+  // console.log(
+  //   id,
+  //   family,
+  //   Kebele,
+  //   occation,
+  //   applicant,
+  //   spouseName,
+  //   spouseBod,
+  //   applicantBod,
+  //   children,
+  //   eContactName,
+  //   ePhone
+  // );
+  const sql = `INSERT INTO askform (FamilySize, UserId, Kebele, Occupation, Applicant, Spouse_Name, Spouse_Bod, Applicant_Bod, Children, eContactName, ePhone) VALUES ("${family}", "${id}",  "${Kebele}","${occupation}","${applicant}","${spouseName}","${spouseBod}","${applicantBod}","${children}","${eContactName}","${ePhone}");`;
   db.query(sql, (err, data) => {
     if (err) throw err;
     console.log("successful post");
@@ -230,12 +242,12 @@ app.post("/payment", async (req, res) => {
   const RETURN_URL = `http://localhost:3000/dashboard`;
 
   const TEXT_REF = "tx-myecommerce12345-" + Date.now();
-
+  const { name, phone_number, amount } = req.body;
   const data = {
-    amount: req.body.amount,
+    amount: amount,
     currency: "ETB",
-    first_name: req.body.name,
-    phone_number: req.body.phone_number,
+    first_name: name,
+    phone_number: phone_number,
     tx_ref: TEXT_REF,
     callback_url: CALLBACK_URL + TEXT_REF,
     return_url: RETURN_URL,
