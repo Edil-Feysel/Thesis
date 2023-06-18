@@ -68,7 +68,7 @@ const Dashboard = () => {
                         }}
                         className="btn-ask"
                       >
-                        Ask
+                        Ask Membership
                       </button>
                     </div>
                   )
