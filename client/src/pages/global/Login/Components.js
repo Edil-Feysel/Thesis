@@ -14,7 +14,7 @@ export const Container = styled.div`
 export const SignUpContainer = styled.div`
   position: absolute;
   top: 0;
-  height: 100%;
+  height: 80%;
   transition: all 0.6s ease-in-out;
   left: 0;
   width: 50%;
