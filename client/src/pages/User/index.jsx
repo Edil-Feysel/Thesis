@@ -6,6 +6,7 @@ import { MyProSidebarProvider } from "../global/sidebar/sidebarContext";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "../../theme";
 import axios from "axios";
+import PayHistory from "./PayHistory";
 
 const User = () => {
   const [theme, colorMode] = useMode();
@@ -24,7 +25,6 @@ const User = () => {
   const [Cpass, setCpass] = useState("");
   const [Err, setErr] = useState(false);
   const [pErr, setPerr] = useState(false);
-  const [payHis, setPayHis] = useState("");
   const ID = sessionStorage.getItem("ID");
 
   const handleSecurity = () => {
@@ -297,7 +297,7 @@ const User = () => {
                       </Grid>
                     </Box>
                   )}
-                  {History && <div>hi hte ioaihf</div>}
+                  {History && <PayHistory />}
                 </div>
               </div>
             </main>

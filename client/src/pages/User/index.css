@@ -12,3 +12,20 @@
 .header-list {
   background-color: rgba(14, 14, 26, 0.829);
 }
+
+.pay-column {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.pay-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.pay-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
