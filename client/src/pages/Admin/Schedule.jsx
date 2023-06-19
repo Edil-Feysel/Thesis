@@ -9,13 +9,8 @@ const Schedule = (EventId) => {
   const [group, setGroup] = useState("");
   const [task, setTask] = useState("");
   const [date, setDate] = useState("");
-  const [scheduled, setScheduled] = useState([]);
   const navigate = useNavigate();
-  //   Axios.get(`http://localhost:3001/Scheduled?EventId=${EventId}`).then(
-  //     (res) => {
-  //       setScheduled(res.data);
-  //     }
-  //   );
+
   const submit = (e) => {
     e.preventDefault();
     try {

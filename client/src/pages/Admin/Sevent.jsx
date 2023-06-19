@@ -5,7 +5,7 @@ import Schedule from "./Schedule";
 
 const Sevent = () => {
   const [futEvents, setFutEvent] = useState([]);
-  const [eventId, setEventId] = useState([]);
+  // const [eventId, setEventId] = useState([]);
 
   Axios.get("http://localhost:3001/futureEvents").then((response) => {
     setFutEvent(response.data);
@@ -19,7 +19,6 @@ const Sevent = () => {
         <div className="sevent">
           <div className="sevent-list">
             <div className="sevent-img">
-              
               <img src={data.Img} alt="" />
             </div>
             <div className="sevent-name">{data.EventName}</div>
