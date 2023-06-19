@@ -1,75 +1,109 @@
 import React, { useState } from "react";
-import { Box, Button, Grid, TextField } from "@mui/material";
-import { Formik, Field, ErrorMessage } from "formik";
-import * as yup from "yup";
-import { useMediaQuery } from "@mui/material";
-import Header from "../../components/Header";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import "./index.css";
 import Topbar from "../global/Topbar";
 import { MyProSidebarProvider } from "../global/sidebar/sidebarContext";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "../../theme";
+import axios from "axios";
 
 const User = () => {
   const [theme, colorMode] = useMode();
-  const [General, setGeneral] = useState(false);
+  const [General, setGeneral] = useState(true);
   const [Security, setSecurity] = useState(false);
+  const [History, setHistory] = useState(false);
+  const [familySize, setFamilySize] = useState("");
+  const [spouseName, setSpouseName] = useState("");
+  const [spouseDOB, setSpouseDoB] = useState("");
+  const [occupation, setOccupation] = useState("");
+  const [childern, setChildren] = useState("");
+  const [eContactN, setEcontactN] = useState("");
+  const [ePhone, setEphone] = useState("");
+  const [Opass, setOpass] = useState("");
+  const [Npass, setNpass] = useState("");
+  const [Cpass, setCpass] = useState("");
+  const [Err, setErr] = useState(false);
+  const [pErr, setPerr] = useState(false);
+  const [payHis, setPayHis] = useState("");
+  const ID = sessionStorage.getItem("ID");
 
   const handleSecurity = () => {
+    setHistory(false);
     setGeneral(false);
-    setSecurity(!Security);
+    setSecurity(true);
   };
 
   const handleGeneral = () => {
-    setGeneral(!General);
     setSecurity(false);
+    setHistory(false);
+    setGeneral(true);
   };
 
-  const isNonMobile = useMediaQuery("(min-width:600px)");
-  const phoneRegExp =
-    /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const handleHistory = () => {
+    setGeneral(false);
+    setSecurity(false);
+    setHistory(true);
   };
 
-  const initialValues = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    contact: "",
-    address1: "",
-    address2: "",
-    oldEmail: "",
-    oldPassword: "",
-    newEmail: "",
-    newPassword: "",
-    confirmEmail: "",
-    confirmPassword: "",
+  const reset = () => {
+    setFamilySize("");
+    setSpouseName("");
+    setSpouseDoB("");
+    setOccupation("");
+    setChildren("");
+    setEcontactN("");
+    setEphone("");
+    setOpass("");
+    setNpass("");
+    setCpass("");
   };
 
-  const checkoutSchema = yup.object().shape({
-    firstName: yup.string().required("Required"),
-    lastName: yup.string().required("Required"),
-    email: yup.string().email("Invalid email!").required("Required"),
-    contact: yup
-      .string()
-      .matches(phoneRegExp, "Phone number is not valid!")
-      .required("Required"),
-    address1: yup.string().required("Required"),
-    address2: yup.string().required("Required"),
-    oldEmail: yup.string().email("Invalid email!").required("Required"),
-    oldPassword: yup.string().required("Required"),
-    newEmail: yup.string().email("Invalid email!").required("Required"),
-    newPassword: yup.string().required("Required"),
-    confirmEmail: yup
-      .string()
-      .email("Invalid email!")
-      .oneOf([yup.ref("newEmail")], "Emails must match")
-      .required("Required"),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref("newPassword")], "Passwords must match").required("Required"),
-  });
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    axios.put("http://localhost:3001/updateUserInfo", {
+      familySize: familySize,
+      spouseName: spouseName,
+      spouseDOB: spouseDOB,
+      occupation: occupation,
+      childern: childern,
+      eContactN: eContactN,
+      ePhone: ePhone,
+      ID: ID,
+    });
+    setFamilySize("");
+    setSpouseName("");
+    setSpouseDoB("");
+    setOccupation("");
+    setChildren("");
+    setEcontactN("");
+    setEphone("");
+  };
+
+  const UpdatePassword = async (e) => {
+    e.preventDefault();
+    try {
+      setErr(false);
+      setPerr(false);
+      if (Npass === Cpass) {
+        const response = await axios.put("http://localhost:3001/updatepass", {
+          ID: ID,
+          NewPass: Npass,
+          password: Opass,
+          confPass: Cpass,
+        });
+        if (response.data.passErr) {
+          setPerr(true);
+        }
+        setNpass("");
+        setOpass("");
+        setCpass("");
+      } else {
+        setErr(true);
+      }
+    } catch (err) {
+      throw err;
+    }
+  };
 
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -82,159 +116,184 @@ const User = () => {
               <div className="setting-container">
                 <div className="setting-header">
                   <div className="header-list">
-                    
                     <button className="setting-btn" onClick={handleGeneral}>
-                      General
+                      Update
                     </button>
                     <button className="setting-btn" onClick={handleSecurity}>
-                      Security
+                      Change Password
+                    </button>
+                    <button className="setting-btn" onClick={handleHistory}>
+                      Payment history
                     </button>
                   </div>
                 </div>
                 <div className="setting-content">
                   {General && (
-                    <Formik
-                      initialValues={initialValues}
-                      validationSchema={checkoutSchema}
-                      onSubmit={handleFormSubmit}
+                    <Box
+                      component="form"
+                      onSubmit={handleUpdate}
+                      sx={{ mt: 3, width: "100%" }}
                     >
-                      {({ handleSubmit }) => (
-                        <form onSubmit={handleSubmit}>
-                          <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
-                              <Field
-                                as={TextField}
-                                name="firstName"
-                                label="First Name"
-                                fullWidth
-                              />
-                              <ErrorMessage name="firstName" component="div" />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                              <Field
-                                as={TextField}
-                                name="lastName"
-                                label="Last Name"
-                                fullWidth
-                              />
-                              <ErrorMessage name="lastName" component="div" />
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Field
-                                as={TextField}
-                                name="email"
-                                label="Email"
-                                fullWidth
-                              />
-                              <ErrorMessage name="email" component="div" />
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Field
-                                as={TextField}
-                                name="contact"
-                                label="Contact"
-                                fullWidth
-                              />
-                              <ErrorMessage name="contact" component="div" />
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Field
-                                as={TextField}
-                                name="address1"
-                                label="Address 1"
-                                fullWidth
-                              />
-                              <ErrorMessage name="address1" component="div" />
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Field
-                                as={TextField}
-                                name="address2"
-                                label="Address 2"
-                                fullWidth
-                              />
-                              <ErrorMessage name="address2" component="div" />
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                              >
-                                Submit
-                              </Button>
-                            </Grid>
-                          </Grid>
-                        </form>
-                      )}
-                    </Formik>
+                      <Typography variant="h5" gutterBottom>
+                        Update your personal information
+                      </Typography>
+                      <TextField
+                        id="fsize"
+                        name="fsize"
+                        label="Total Family Size"
+                        fullWidth
+                        required
+                        value={familySize}
+                        onChange={(e) => setFamilySize(e.target.value)}
+                        sx={{ mb: 2 }}
+                      />
+                      <TextField
+                        id="sname"
+                        name="sname"
+                        label="Spouse Name"
+                        fullWidth
+                        required
+                        value={spouseName}
+                        onChange={(e) => setSpouseName(e.target.value)}
+                        sx={{ mb: 2 }}
+                      />
+                      <TextField
+                        id="bapp"
+                        name="bapp"
+                        label="Date of Birth of your spouse in the form of 0000-00-00"
+                        fullWidth
+                        required
+                        value={spouseDOB}
+                        onChange={(e) => setSpouseDoB(e.target.value)}
+                        sx={{ mb: 2 }}
+                      />
+                      <TextField
+                        id="occupation"
+                        name="occupation"
+                        label="Occupation"
+                        fullWidth
+                        required
+                        value={occupation}
+                        onChange={(e) => setOccupation(e.target.value)}
+                        sx={{ mb: 2 }}
+                      />
+                      <TextField
+                        id="cno"
+                        name="cno"
+                        label="Number of Children under 18"
+                        fullWidth
+                        required
+                        value={childern}
+                        onChange={(e) => setChildren(e.target.value)}
+                        sx={{ mb: 2 }}
+                      />
+                      <TextField
+                        id="sname"
+                        name="sname"
+                        label="Emergency contact person name"
+                        fullWidth
+                        value={eContactN}
+                        onChange={(e) => setEcontactN(e.target.value)}
+                        sx={{ mb: 2 }}
+                      />
+                      <TextField
+                        id="sbod"
+                        name="sbod"
+                        label="Emergency contact person phone number"
+                        fullWidth
+                        value={ePhone}
+                        onChange={(e) => setEphone(e.target.value)}
+                        sx={{ mb: 2 }}
+                      />
+
+                      <Grid container justifyContent="space-between">
+                        <Grid item>
+                          <Button
+                            variant="contained"
+                            onClick={reset}
+                            sx={{ mr: 2 }}
+                          >
+                            Cancel
+                          </Button>
+                        </Grid>
+                        <Grid item>
+                          <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                          >
+                            Submit
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </Box>
                   )}
                   {Security && (
-                    
-                     
-                       <Formik
-                      initialValues={initialValues}
-                      validationSchema={checkoutSchema}
-                      onSubmit={handleFormSubmit}
+                    <Box
+                      component="form"
+                      onSubmit={UpdatePassword}
+                      sx={{ mt: 3, width: "100%" }}
                     >
-                      {({ handleSubmit }) => (
-                        <form onSubmit={handleSubmit}>
-                          {/* Security form fields */}
-                          <Grid container spacing={2}>
-                           
-                            <Grid item xs={12}>
-                              <Field
-                                as={TextField}
-                                name="oldPassword"
-                                label="Old Password"
-                                fullWidth
-                              />
-                              <ErrorMessage
-                                name="oldPassword"
-                                component="div"
-                              />
-                            </Grid>
-                          
-                            <Grid item xs={12}>
-                              <Field
-                                as={TextField}
-                                name="newPassword"
-                                label="New Password"
-                                fullWidth
-                              />
-                              <ErrorMessage
-                                name="newPassword"
-                                component="div"
-                              />
-                            </Grid>
-                        
-                            <Grid item xs={12}>
-                              <Field
-                                as={TextField}
-                                name="confirmPassword"
-                                label="Confirm Password"
-                                fullWidth
-                              />
-                              <ErrorMessage
-                                name="confirmPassword"
-                                component="div"
-                              />
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                              >
-                                Submit
-                              </Button>
-                            </Grid>
-                          </Grid>
-                        </form>
-                      )}
-                    </Formik>
-                    )}
-              
+                      <Typography variant="h5" gutterBottom>
+                        Change your password
+                      </Typography>
+                      <TextField
+                        id="Opass"
+                        label="Old Password"
+                        fullWidth
+                        required
+                        value={Opass}
+                        onChange={(e) => setOpass(e.target.value)}
+                        sx={{ mb: 2 }}
+                      />
+                      <span style={{ color: "red" }}>
+                        {pErr ? "Wrong password" : ""}
+                      </span>
+                      <TextField
+                        id="Npass"
+                        label="New Password"
+                        fullWidth
+                        required
+                        value={Npass}
+                        onChange={(e) => setNpass(e.target.value)}
+                        sx={{ mb: 2 }}
+                      />
+                      <TextField
+                        id="cpass"
+                        label="Confirm Password"
+                        fullWidth
+                        required
+                        value={Cpass}
+                        onChange={(e) => setCpass(e.target.value)}
+                        sx={{ mb: 2 }}
+                      />
+                      <span style={{ color: "red" }}>
+                        {Err ? "The password are not the same" : ""}
+                      </span>
+
+                      <Grid container justifyContent="space-between">
+                        <Grid item>
+                          <Button
+                            variant="contained"
+                            onClick={reset}
+                            sx={{ mr: 2 }}
+                          >
+                            Cancel
+                          </Button>
+                        </Grid>
+                        <Grid item>
+                          <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                          >
+                            Submit
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  )}
+                  {History && <div>hi hte ioaihf</div>}
                 </div>
               </div>
             </main>
