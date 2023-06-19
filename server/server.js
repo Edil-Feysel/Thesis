@@ -164,6 +164,13 @@ app.get("/futureEvents", async (req, res) => {
   });
 });
 
+// app.get("/Scheduled", async (req, res) => {
+//   const { EventId } = req.query;
+//   // const id = ID
+//   res.send(EventId);
+//   console.log(typeof EventId);
+// });
+
 app.get("/askNotification", async (req, res) => {
   const { ID } = req.query;
   // console.log(ID);
@@ -257,7 +264,18 @@ app.post("/payment", async (req, res) => {
 
 app.post("/addSchedule", async (req, res) => {
   const { group, task, date, EventId } = req.body;
-  console.log(group, task, date, EventId);
+  const EventID = EventId.EventId;
+  // console.log(group, task, date, EventID);
+  const sql = `SELECT ID FROM task WHERE TaskName = "${task}"`;
+  db.query(sql, (err, data) => {
+    if (err) throw err;
+    const TaskId = data[0].ID;
+    const sql = `INSERT INTO schedule (AssignedGroup, EventId, TaskId, DateTime) VALUES ("${group}", "${EventID}", "${TaskId}", "${date}")`;
+    db.query(sql, (err, data) => {
+      if (err) throw err;
+      console.log("successfull schedule");
+    });
+  });
 });
 
 app.post("/addNewMember", async (req, res) => {
