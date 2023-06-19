@@ -115,13 +115,10 @@ app.get("/getUserInfo", async (req, res) => {
   });
 });
 
-// app.get("/askbutton", (req, res) => {
-//   const sql = "SELECT * FROM members WHERE UserId = 3";
-//   db.query(sql, (err, data) => {
-//     if (err) throw err;
-//     data ? res.send(data) : null;
-//   });
-// });
+app.get("/historyPay", (req, res) => {
+  const { ID } = req.body;
+  console.log(ID);
+});
 
 app.get("/newRequest", async (req, res) => {
   const sql = "SELECT * FROM askform";
@@ -156,6 +153,14 @@ app.get("/events", async (req, res) => {
   db.query(sql, (err, data) => {
     if (err) throw err;
     res.send(data);
+  });
+});
+
+app.get("/futureEvents", async (req, res) => {
+  const sql = `SELECT * FROM event WHERE year(EventDate) = year(curdate()) AND month(EventDate) >= month(curdate()) AND date(EventDate) > date(curdate());`;
+  db.query(sql, (err, data) => {
+    if (err) throw err;
+    data ? res.send(data) : null;
   });
 });
 
@@ -248,6 +253,11 @@ app.post("/payment", async (req, res) => {
       res.send(response.data.data.checkout_url);
     })
     .catch((err) => console.log(err));
+});
+
+app.post("/addSchedule", async (req, res) => {
+  const { group, task, date, EventId } = req.body;
+  console.log(group, task, date, EventId);
 });
 
 app.post("/addNewMember", async (req, res) => {

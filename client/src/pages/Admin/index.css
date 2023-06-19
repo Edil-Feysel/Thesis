@@ -37,3 +37,21 @@
   -webkit-text-fill-color: rgba(241, 238, 230, 0.651);
   background-color: rgba(20, 18, 18, 0.76);
 }
+
+.sevent-container {
+  display: flex;
+  width: 98%;
+}
+
+.sevent-img img {
+  width: 100px;
+  height: 100px;
+  background-color: white;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.sevent-header {
+  display: flex;
+  justify-content: center;
+}
