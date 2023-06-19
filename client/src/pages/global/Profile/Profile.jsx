@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import "./Profile.css";
-// import "react-multi-carousel/lib/styles.css";
 import Axios from "axios";
 import Logout from "../Logout/Logout";
+
 import Topbar from "../Topbar";
 import { MyProSidebarProvider } from "../sidebar/sidebarContext";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "../../../theme";
 import { FaInstagram } from "react-icons/fa";
-// import { IconButton } from "@mui/material";
-// import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 
 const Profile = () => {
   const [theme, colorMode] = useMode();
@@ -23,23 +21,28 @@ const Profile = () => {
     setFileName(e.target.files[0].name);
   };
 
-  useEffect(
-    (e) => {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("fileName", fileName);
-      try {
-        Axios.post(`http://localhost:3001/profilePhoto?ID=${ID}`, formData);
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    [file, fileName]
-  );
+  useEffect(() => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("fileName", fileName);
 
-  Axios.get(`http://localhost:3001/profile?ID=${ID}`).then((res) => {
-    setProfile(res.data);
-  });
+    try {
+      Axios.post(`http://localhost:3001/profilePhoto?ID=${ID}`, formData);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [file, fileName, ID]);
+
+  useEffect(() => {
+    Axios.get(`http://localhost:3001/profile?ID=${ID}`).then((res) => {
+      setProfile(res.data);
+    });
+  }, [ID]);
+
+  const handleCancelMembership = () => {
+    // Add your cancellation logic here
+    console.log("Membership canceled");
+  };
 
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -55,7 +58,7 @@ const Profile = () => {
                     <img src={profile[0]?.Picture} alt="" />
                     <div className="img_btn">
                       <label htmlFor="pic">
-                        <FaInstagram className="profile-icon"></FaInstagram>
+                        <FaInstagram className="profile-icon" />
                       </label>
                       <input
                         className="input_file"
@@ -67,9 +70,6 @@ const Profile = () => {
                         onChange={saveFile}
                       />
                     </div>
-                    {/* <IconButton>
-                      <SettingsOutlinedIcon />
-                    </IconButton> */}
                   </div>
                   <div className="user_countainer">
                     <div className="user_name">
@@ -94,6 +94,14 @@ const Profile = () => {
                     <div className="user-info">
                       <p>Registration Date</p>
                       <p>{profile[0]?.Registration_Date}</p>
+                    </div>
+                    <div className="user-info">
+                      <button
+                        className="cancel-membership-button"
+                        onClick={handleCancelMembership}
+                      >
+                        Cancel Membership
+                      </button>
                     </div>
                     <div className="logout-div">
                       <Logout />
