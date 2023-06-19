@@ -1,0 +1,14 @@
+.setting-content {
+  width: 90%;
+  /* justify-content: center; */
+  margin-left: 5%;
+}
+
+.setting-header {
+  width: 95%;
+  margin-left: 2.5%;
+}
+
+.header-list {
+  background-color: rgba(14, 14, 26, 0.829);
+}

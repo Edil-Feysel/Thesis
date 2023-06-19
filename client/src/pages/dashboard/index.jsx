@@ -1,7 +1,6 @@
 import Axios from "axios";
 import "./index.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Topbar from "../global/Topbar";
 import { MyProSidebarProvider } from "../global/sidebar/sidebarContext";
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -11,7 +10,6 @@ import Welcome from "./Welcome";
 const Dashboard = () => {
   const [ask, setAsk] = useState([]);
   const [access, setAccess] = useState([]);
-  const navigate = useNavigate();
   const [theme, colorMode] = useMode();
   const ID = sessionStorage.getItem("ID");
 

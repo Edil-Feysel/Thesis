@@ -12,7 +12,7 @@ const axios = require("axios").default;
 app.use(
   cors({
     origin: ["http://localhost:3000"],
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT"],
     credentials: true,
   })
 );
@@ -289,6 +289,60 @@ app.post("/addNewMember", async (req, res) => {
         }
       });
     }
+  });
+});
+
+app.put("/updateUserInfo", async (req, res) => {
+  const {
+    ID,
+    familySize,
+    spouseName,
+    spouseDOB,
+    occupation,
+    childern,
+    eContactN,
+    ePhone,
+  } = req.body;
+  console.log(
+    ID,
+    familySize,
+    spouseName,
+    spouseDOB,
+    occupation,
+    childern,
+    eContactN,
+    ePhone
+  );
+  const sql = `UPDATE members SET FamilySize = "${familySize}", Occupation = "${occupation}", Spouse_Name = "${spouseName}", Spouse_Bod = "${spouseDOB}", Children = "${childern}", eContactName = "${eContactN}", ePhone = "${ePhone}" WHERE UserId = ${ID}`;
+  db.query(sql, (err, data) => {
+    if (err) throw err;
+    console.log("successful Upadate");
+  });
+});
+
+app.put("/updatepass", async (req, res) => {
+  const { ID, NewPass, password } = req.body;
+  // console.log(ID, NewPass, password);
+  const sql = `SELECT Password FROM user WHERE ID = ${ID}`;
+  db.query(sql, (err, data) => {
+    if (err) throw err;
+    // console.log(data);
+    bcrypt.compare(password, data[0].Password, (error, result) => {
+      if (error) throw error;
+      if (result) {
+        bcrypt.genSalt(11, (err, salt) => {
+          bcrypt.hash(NewPass, salt, (err, hash) => {
+            const sql = `UPDATE user SET Password = "${hash}" WHERE ID = ${ID}`;
+            db.query(sql, (err, data) => {
+              if (err) throw err;
+              console.log("successfull update pass");
+            });
+          });
+        });
+      } else {
+        res.send({ passErr: "Wrong Password" });
+      }
+    });
   });
 });
 
