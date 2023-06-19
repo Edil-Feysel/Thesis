@@ -1,11 +1,21 @@
 import Axios from "axios";
 import { useState } from "react";
-import "./Schedule.css";
+
+import "./index.css";
+
+import { useNavigate } from "react-router-dom";
 
 const Schedule = (EventId) => {
   const [group, setGroup] = useState("");
   const [task, setTask] = useState("");
   const [date, setDate] = useState("");
+  const [scheduled, setScheduled] = useState([]);
+  const navigate = useNavigate();
+  //   Axios.get(`http://localhost:3001/Scheduled?EventId=${EventId}`).then(
+  //     (res) => {
+  //       setScheduled(res.data);
+  //     }
+  //   );
   const submit = (e) => {
     e.preventDefault();
     try {
@@ -15,10 +25,10 @@ const Schedule = (EventId) => {
         date: date,
         EventId: EventId,
       });
-      console.log(date);
       setDate("");
       setGroup("");
       setTask("");
+      navigate("/Admin");
     } catch (err) {
       throw err;
     }
