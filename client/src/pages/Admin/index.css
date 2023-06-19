@@ -19,7 +19,7 @@
 
 .btn-request {
   background-color: rgba(28, 28, 28, 0.136);
-  -webkit-text-fill-color: rgba(245, 222, 179, 0.651);
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.651);
   border-style: none;
   height: 40px;
   width: 180px;
@@ -54,4 +54,170 @@
 .sevent-header {
   display: flex;
   justify-content: center;
+}
+/* index.css */
+
+.sevent-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sevent-header {
+  padding: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.sevent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sevent-list {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.sevent-img img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.sevent-name {
+  font-weight: bold;
+  margin-right: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Input Styles */
+input[type="text"],
+input[type="date"],
+select {
+  margin: 5px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+input[type="submit"],
+button {
+  margin: 10px;
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Responsive CSS */
+@media screen and (max-width: 768px) {
+  .sevent {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sevent-list {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .sevent-img img {
+    width: 150px;
+    height: 150px;
+  }
+}
+/* index.css */
+
+.setting-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.setting-header {
+  padding: 10px;
+  text-align: center;
+}
+
+.header-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.setting-btn {
+  margin: 5px;
+  padding: 12px 20px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.setting-btn:hover {
+  background-color: #000000;
+}
+
+.setting-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.request-membership {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+  width: 100%;
+}
+
+.btn-request {
+  margin: 10px;
+  padding: 12px 20px;
+  background-color: #0f4d7e;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  width: 100%;
+}
+
+.btn-request:hover {
+  background-color: #010307;
+}
+
+.name {
+  font-weight: bold;
+}
+
+/* Responsive CSS */
+@media screen and (max-width: 768px) {
+  .setting-btn {
+    flex-basis: calc(50% - 10px);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .request-membership {
+    max-width: 400px;
+  }
 }

@@ -1,5 +1,6 @@
 import Axios from "axios";
 import { useState } from "react";
+import "./Schedule.css";
 
 const Schedule = (EventId) => {
   const [group, setGroup] = useState("");
@@ -24,7 +25,7 @@ const Schedule = (EventId) => {
   };
 
   return (
-    <div>
+    <div className="schedule-container">
       <form action="!#" onSubmit={submit}>
         <label htmlFor="group">Asigned Group</label>
         <select
