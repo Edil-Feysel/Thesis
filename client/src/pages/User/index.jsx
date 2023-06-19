@@ -43,7 +43,7 @@ const User = () => {
     setGeneral(false);
     setSecurity(false);
     setHistory(true);
-    axios.get(`http://localhost:3001/historyPay?ID=${ID}`);
+   
   };
 
   const reset = () => {
