@@ -16,6 +16,12 @@ import {
   ListItemText,
   Typography,
   useTheme,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
 } from "@mui/material";
 import Header from "../../components/Header";
 import { tokens } from "../../theme";
@@ -63,17 +69,13 @@ const Calendar = () => {
               <Topbar />
               <Box m="20px">
                 <Header
-                  title="Calendar"
+                  title="Schedule"
                   subtitle="Check Your Schedule and Upcomming Event"
                 />
                 <Grid container spacing={2}>
                   <Grid xs={12} md={4}>
-                    <Box
-                      backgroundColor={colors.primary[400]}
-                      p="15px"
-                      borderRadius="4px"
-                    >
-                      <Typography variant="h5">Events</Typography>
+                   
+                    
                       <List>
                         {currentEvents.map((event) => (
                           <ListItem
@@ -84,61 +86,43 @@ const Calendar = () => {
                               borderRadius: "2px",
                             }}
                           >
-                            <ListItemText
-                              primary={event.title}
-                              secondary={
-                                <Typography>
+                       
+                          </ListItem>
+                        ))}
+                      </List>
+                   
+                  </Grid>
+                  <Grid xs={12} md={8}>
+               
+                      <TableContainer>
+                        <Table>
+                          <TableHead>
+                            <TableRow>
+                              <TableCell>Date</TableCell>
+                              <TableCell>Event</TableCell>
+                              <TableCell>Task</TableCell>
+                              <TableCell>Group</TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {currentEvents.map((event) => (
+                              <TableRow key={event.id}>
+                                <TableCell>
                                   {formatDate(event.start, {
                                     year: "numeric",
                                     month: "short",
                                     day: "numeric",
                                   })}
-                                </Typography>
-                              }
-                            />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </Box>
-                  </Grid>
-                  <Grid xs={12} md={8}>
-                    <Box ml="15px">
-                      <FullCalendar
-                        height="75vh"
-                        plugins={[
-                          dayGridPlugin,
-                          timeGridPlugin,
-                          interactionPlugin,
-                          listPlugin,
-                        ]}
-                        headerToolbar={{
-                          left: "prev,next today",
-                          center: "title",
-                          right:
-                            "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
-                        }}
-                        initialView="dayGridMonth"
-                        editable={true}
-                        selectable={true}
-                        selectMirror={true}
-                        dayMaxEvents={true}
-                        select={handleDateClick}
-                        eventClick={handleEventClick}
-                        eventsSet={(events) => setCurrentEvents(events)}
-                        initialEvents={[
-                          {
-                            id: "12315",
-                            title: "All-day event",
-                            date: "2022-09-14",
-                          },
-                          {
-                            id: "5123",
-                            title: "Timed event",
-                            date: "2022-09-28",
-                          },
-                        ]}
-                      />
-                    </Box>
+                                </TableCell>
+                                <TableCell>{event.title}</TableCell>
+                                <TableCell>{event.task}</TableCell>
+                                <TableCell>{event.group}</TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                   
                   </Grid>
                 </Grid>
               </Box>
