@@ -1,6 +1,6 @@
 import Axios from "axios";
 import { useState } from "react";
-
+import "./index.css"
 const Payment = () => {
   const [payment, setPayment] = useState([]);
   const [pay, setPay] = useState("");
@@ -44,14 +44,14 @@ const Payment = () => {
           <div>
             {" "}
             you have monthly payment due{" "}
-            <div>
+            <div className="Button">
               <input
                 id="pay"
                 name="pay"
                 type="number"
                 onChange={(e) => setPay(e.target.value)}
               />
-              <button onClick={handlebooking}>Click to Pay</button>
+              <button className="pay-button" onClick={handlebooking}>Click to Pay</button>
             </div>
           </div>
         ) : (
