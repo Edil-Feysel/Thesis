@@ -115,11 +115,6 @@ app.get("/getUserInfo", async (req, res) => {
   });
 });
 
-// app.get("/historyPay", (req, res) => {
-//   const { ID } = req.body;
-//   console.log(ID);
-// });
-
 app.get("/newRequest", async (req, res) => {
   const sql = "SELECT * FROM askform";
   db.query(sql, (err, data) => {
@@ -173,20 +168,28 @@ app.get("/futureEvents", async (req, res) => {
 
 app.get("/payHistory", async (req, res) => {
   const { ID } = req.query;
-  // console.log(ID);
-  const sql = `SELECT * FROM members WHERE UserId = ${ID}`;
+  const sql = `SELECT ID FROM members WHERE UserId = ${ID}`;
   db.query(sql, (err, data) => {
     if (err) {
       throw err;
     } else {
       const MId = data[0].ID;
-      // console.log(MId);
       const sql = `SELECT * FROM monthlypayment WHERE MembersId = ${MId}`;
-      db.query(sql, (err, dpay) => {
+      db.query(sql, (err, data) => {
         if (err) throw err;
-        dpay ? res.send(dpay) : null;
+        data ? res.send(data) : null;
       });
     }
+  });
+});
+
+app.get("/applicantName", async (req, res) => {
+  const { ID } = req.query;
+  // console.log(ID);
+  const sql = `SELECT Applicant FROM members WHERE UserId = ${ID}`;
+  db.query(sql, (err, data) => {
+    if (err) throw err;
+    res.send(data);
   });
 });
 
@@ -279,6 +282,40 @@ app.post("/payment", async (req, res) => {
       res.send(response.data.data.checkout_url);
     })
     .catch((err) => console.log(err));
+});
+
+app.post("/monPayment", async (req, res) => {
+  // const PORT = process.env.PORT || 4400;
+
+  // const CHAPA_URL = "https://api.chapa.co/v1/transaction/initialize";
+  // const CHAPA_AUTH = "CHASECK_TEST-XhD2k7sWyUsiPWQGtusAxLrq6k26nDvh";
+  // const config = {
+  //   headers: {
+  //     Authorization: ` Bearer ${CHAPA_AUTH}`,
+  //   },
+  // };
+  // const CALLBACK_URL = "http://localhost:4400/api/verify-payment/";
+  // const RETURN_URL = `http://localhost:3000/user`;
+
+  // const TEXT_REF = "tx-myecommerce12345-" + Date.now();
+  const { name, amount } = req.body;
+  console.log(name, amount);
+  // const data = {
+  //   amount: amount,
+  //   currency: "ETB",
+  //   first_name: name,
+  //   tx_ref: TEXT_REF,
+  //   callback_url: CALLBACK_URL + TEXT_REF,
+  //   return_url: RETURN_URL,
+  // };
+  // console.log(data);
+
+  // await axios
+  //   .post(CHAPA_URL, data, config)
+  //   .then((response) => {
+  //     res.send(response.data.data.checkout_url);
+  //   })
+  //   .catch((err) => console.log(err));
 });
 
 app.post("/addSchedule", async (req, res) => {

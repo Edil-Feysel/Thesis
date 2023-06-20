@@ -7,12 +7,14 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "../../theme";
 import axios from "axios";
 import PayHistory from "./PayHistory";
+import Payment from "./Payment";
 
 const User = () => {
   const [theme, colorMode] = useMode();
   const [General, setGeneral] = useState(true);
   const [Security, setSecurity] = useState(false);
   const [History, setHistory] = useState(false);
+  const [Payments, setPayment] = useState(false);
   const [familySize, setFamilySize] = useState("");
   const [spouseName, setSpouseName] = useState("");
   const [spouseDOB, setSpouseDoB] = useState("");
@@ -28,6 +30,7 @@ const User = () => {
   const ID = sessionStorage.getItem("ID");
 
   const handleSecurity = () => {
+    setPayment(false);
     setHistory(false);
     setGeneral(false);
     setSecurity(true);
@@ -36,14 +39,22 @@ const User = () => {
   const handleGeneral = () => {
     setSecurity(false);
     setHistory(false);
+    setPayment(false);
     setGeneral(true);
   };
 
   const handleHistory = () => {
     setGeneral(false);
     setSecurity(false);
+    setPayment(false);
     setHistory(true);
-   
+  };
+
+  const handlePayment = () => {
+    setGeneral(false);
+    setSecurity(false);
+    setHistory(false);
+    setPayment(true);
   };
 
   const reset = () => {
@@ -125,6 +136,9 @@ const User = () => {
                     </button>
                     <button className="setting-btn" onClick={handleHistory}>
                       Payment history
+                    </button>
+                    <button className="setting-btn" onClick={handlePayment}>
+                      Payment
                     </button>
                   </div>
                 </div>
@@ -298,6 +312,7 @@ const User = () => {
                     </Box>
                   )}
                   {History && <PayHistory />}
+                  {Payments && <Payment />}
                 </div>
               </div>
             </main>
