@@ -1,5 +1,8 @@
 import Axios from "axios";
 import { useState } from "react";
+
+import "./index.css";
+
 import { useNavigate } from "react-router-dom";
 
 const Schedule = (EventId) => {
@@ -32,7 +35,7 @@ const Schedule = (EventId) => {
   };
 
   return (
-    <div>
+    <div className="schedule-container">
       <form action="!#" onSubmit={submit}>
         <label htmlFor="group">Asigned Group</label>
         <select

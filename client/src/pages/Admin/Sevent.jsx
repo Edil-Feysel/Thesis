@@ -19,6 +19,7 @@ const Sevent = () => {
         <div className="sevent">
           <div className="sevent-list">
             <div className="sevent-img">
+              
               <img src={data.Img} alt="" />
             </div>
             <div className="sevent-name">{data.EventName}</div>

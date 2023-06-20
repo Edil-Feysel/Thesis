@@ -244,6 +244,7 @@ const User = () => {
                         fullWidth
                         required
                         value={Opass}
+                        type="password"
                         onChange={(e) => setOpass(e.target.value)}
                         sx={{ mb: 2 }}
                       />
@@ -255,6 +256,7 @@ const User = () => {
                         label="New Password"
                         fullWidth
                         required
+                        type="password"
                         value={Npass}
                         onChange={(e) => setNpass(e.target.value)}
                         sx={{ mb: 2 }}
@@ -264,6 +266,7 @@ const User = () => {
                         label="Confirm Password"
                         fullWidth
                         required
+                        type="password"
                         value={Cpass}
                         onChange={(e) => setCpass(e.target.value)}
                         sx={{ mb: 2 }}
