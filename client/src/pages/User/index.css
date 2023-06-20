@@ -29,14 +29,13 @@
   display: flex;
   flex-direction: column;
 }
-<<<<<<< HEAD
-=======
 
 .pay-header {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
+
 /* index.css */
 
 /* Styles for the container */
@@ -118,4 +117,3 @@
     text-align: center;
   }
 }
->>>>>>> 3fb1332e167ccfb73d119fbc92795bab16024237
