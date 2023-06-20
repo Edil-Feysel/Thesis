@@ -115,10 +115,10 @@ app.get("/getUserInfo", async (req, res) => {
   });
 });
 
-app.get("/historyPay", (req, res) => {
-  const { ID } = req.body;
-  console.log(ID);
-});
+// app.get("/historyPay", (req, res) => {
+//   const { ID } = req.body;
+//   console.log(ID);
+// });
 
 app.get("/newRequest", async (req, res) => {
   const sql = "SELECT * FROM askform";
@@ -170,6 +170,25 @@ app.get("/futureEvents", async (req, res) => {
 //   res.send(EventId);
 //   console.log(typeof EventId);
 // });
+
+app.get("/payHistory", async (req, res) => {
+  const { ID } = req.query;
+  // console.log(ID);
+  const sql = `SELECT * FROM members WHERE UserId = ${ID}`;
+  db.query(sql, (err, data) => {
+    if (err) {
+      throw err;
+    } else {
+      const MId = data[0].ID;
+      // console.log(MId);
+      const sql = `SELECT * FROM monthlypayment WHERE MembersId = ${MId}`;
+      db.query(sql, (err, dpay) => {
+        if (err) throw err;
+        dpay ? res.send(dpay) : null;
+      });
+    }
+  });
+});
 
 app.get("/askNotification", async (req, res) => {
   const { ID } = req.query;

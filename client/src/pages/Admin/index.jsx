@@ -95,7 +95,11 @@ const Admin = () => {
                       <h3>there is no request</h3>
                     ))}
                   {Security &&
-                    (futEvents.length > 0 ? <Sevent /> : "threr no event")}
+                    (futEvents.length > 0 ? (
+                      <Sevent />
+                    ) : (
+                      "There is No Future Event, therefore you can't shedule without Event"
+                    ))}
                 </div>
               </div>
             </main>
