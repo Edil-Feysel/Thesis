@@ -29,3 +29,93 @@
   display: flex;
   flex-direction: column;
 }
+<<<<<<< HEAD
+=======
+
+.pay-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+/* index.css */
+
+/* Styles for the container */
+.pay-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Styles for each payment column */
+.pay-column {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 200%;
+  max-width: 400px;
+}
+
+/* Styles for the pay header */
+.pay-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background-color: #f1f1f1;
+  border-radius: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 170%;
+}
+
+/* Styles for the print button */
+.print {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+/* Styles for the ID, Amount, and Date headers */
+.pay-header > div {
+  flex: 1;
+  text-align: center;
+  color: #333333;
+}
+
+/* Styles for the ID, Amount, and Date in each payment column */
+.pay-column > div {
+  flex: 1;
+  text-align: center;
+  color: #555555;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  /* Adjust the width of payment columns for smaller screens */
+  .pay-column {
+    max-width: 100%;
+  }
+
+  /* Adjust the alignment of the payment header for smaller screens */
+  .pay-header {
+    flex-wrap: wrap;
+  }
+
+  /* Adjust the alignment of ID, Amount, and Date headers for smaller screens */
+  .pay-header > div {
+    flex: 1 1 100%;
+    margin-bottom: 5px;
+    text-align: center;
+  }
+
+  /* Adjust the alignment of ID, Amount, and Date in each payment column for smaller screens */
+  .pay-column > div {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+}
+>>>>>>> 3fb1332e167ccfb73d119fbc92795bab16024237
